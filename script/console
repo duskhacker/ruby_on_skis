@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby 
+require File.dirname(__FILE__) + '/../config/environment'
+env = ENV[Environment.app_env_const] || 'development'
+puts "Loading #{env} environment."
+Environment.setup(env, false)
+require "irb"
+require "irb/completion"
+
+if __FILE__ == $0
+  IRB.start(__FILE__)
+end

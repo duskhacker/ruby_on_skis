@@ -1,0 +1,13 @@
+---
+activerecord:    
+  require: activerecord
+  version: =2.2.2
+activesupport:  
+  require: activesupport
+  version: =2.2.2
+sqlite3-ruby:    
+  require: sqlite3
+  version: =1.2.3
+wxruby:
+  require: wx
+  version: =2.0.0

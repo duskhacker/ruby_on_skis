@@ -1,0 +1,21 @@
+--- 
+:common:
+  :include_dirs:
+  - images
+  - config
+  - migrate
+  :include_files:
+  - /lib/wx/app.xrc
+i686-darwin9: 
+  :include_files:
+  - :source: /opt/local/lib/ruby/gems/1.8/gems/activerecord-2.2.2/lib/active_record/locale/en.yml
+    :target: /lib/active_record/locale
+  - :source: /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/locale/en.yml
+    :target: /lib/active_support/locale
+i386-mswin32: 
+  :makensis: C:/Program Files/NSIS/makensis.exe
+  :include_files:
+  - :source: C:/ruby-1.8.7-p72/lib/ruby/gems/1.8/gems/activerecord-2.2.2/lib/active_record/locale/en.yml
+    :target: /lib/active_record/locale
+  - :source: C:/ruby-1.8.7-p72/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/locale/en.yml
+    :target: /lib/active_support/locale
