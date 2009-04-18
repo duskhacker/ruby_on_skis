@@ -1,0 +1,40 @@
+h1. wxRubyTemplate
+
+h2. Introduction
+
+The aim of the wxRubyTemplate is to provide a starting structure within which to program your WxRuby project. The template provides a set of Rakefiles to manage the project, and most importantly to package and distribute your Ruby program as a standalone project when completed. For now, the template only supports packaging for Mac OS X and Windows, although various flavors of Linux should be easily accommodated and are planned for the future.
+
+h2. Features
+
+* Active Record Support
+* Packaging and Distribution for Windows and Mac OS X. 
+
+h2. Required tools 
+
+In order to use the template effectively, you must use the following tools:
+
+* "wxRuby":http://wxruby.rubyforge.org
+* "wxFormBuilder":http://wxformbuilder.org/
+* XRCise tool from "wxSugar":http://wxruby.rubyforge.org/wiki/wiki.pl?WxSugar. 
+* "Platypus":http://www.sveinbjorn.org/platypus packager for creating the final package on Mac OS X. 
+* "NSIS":http://nsis.sourceforge.net/Main_Page packager for creating the final package on Windows. 
+
+h2. Further work 
+
+Keep in mind that this template is very much a work in progress. I have used it to complete a couple of small projects, and it has worked well for that aim, but right now it is very specific to the job it does, and is pretty hacky in places. 
+
+* Generalize into a system for packaging all kinds of Ruby applications. 
+* Create Wx mock class for unit testing Wx subclasses. (Yes, I know about Nobbie, but I just want something simple that I can mock out calls from/to Wx and have simple RSpec tests.)
+
+h2. Thanks
+
+I want to give a special thanks to Alex Fenton for his post on the wxRuby forum that paved the way for the creation of this template. 
+
+I would also like to thank the creators and contributors of wxWidgets, wxRuby and wxSugar for their outstanding work, otherwise this work would not have been possible. 
+
+h2. License 
+
+While I really don't care about licenses so much, I'll state here that this template is hereby released under Ruby's license, which seems to be pretty liberal. Some kudos in your app would be nice if you base it on this work. 
+
+
+ 
