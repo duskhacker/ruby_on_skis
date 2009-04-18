@@ -4,7 +4,7 @@ module Environment
     attr_accessor :environment # Accessor for testing
     
     def app_name
-      "WxRubyTemplate"
+      "wxRubyTemplate"
     end
  
     def setup(environment, load_gui_components = true, loading_from_bundle = false)
