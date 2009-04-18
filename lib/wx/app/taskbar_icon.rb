@@ -11,8 +11,8 @@ class MyTaskBarIcon < Wx::TaskBarIcon
     @frame = frame
 
     # starting image
-    icon = make_icon("wx_template.ico")
-    set_icon(icon, "#{Environment.app_name.camelize}.ico")
+    icon = make_icon("#{Environment.app_name.underscore}.ico")
+    set_icon(icon, "#{Environment.app_name}")
     @image_index = 1
 
     # events

@@ -4,7 +4,7 @@ module Environment
     attr_accessor :environment # Accessor for testing
     
     def app_name
-      "WxTemplate"
+      "WxRubyTemplate"
     end
  
     def setup(environment, load_gui_components = true, loading_from_bundle = false)
@@ -48,11 +48,11 @@ module Environment
       end
       
       app_files = Dir.glob( app_root + '/lib/extensions/**/*.rb')
-      app_files += Dir.glob( app_root + '/lib/model/*.rb')
+      app_files += Dir.glob( app_root + '/lib/models/*.rb')
 
       if load_gui_components
         app_files += Dir.glob( "#{base_class_path}/*.rb")
-        app_files += Dir.glob( app_root + '/lib/wx/helper/*.rb')
+        app_files += Dir.glob( app_root + '/lib/wx/helpers/*.rb')
         app_files += Dir.glob( app_root + '/lib/wx/app/*.rb')
       end
 

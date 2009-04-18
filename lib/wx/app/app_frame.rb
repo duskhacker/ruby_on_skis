@@ -4,8 +4,6 @@ class AppFrame < AppFrameBase
   def initialize(title)
     super()
 
-    notebook.set_background_colour(Wx::Colour.new(255, 141, 248)) if Environment.production?
-    
     if Environment.darwin?
       @tbicon = MyTaskBarIcon.new(self)
     elsif Environment.mswin?
@@ -19,16 +17,14 @@ class AppFrame < AppFrameBase
 
     evt_menu quit_menu_item, :on_quit
     
-    evt_menu textile_help, :open_textile_help
-
     self.title = title 
     self.size = [ 1024, 868 ]
 
     self.status_text = "Welcome to #{Environment.app_name}!"
     status_bar.set_min_height 80
 
-    messages_panel = MessagesPanel.new(notebook)
-    notebook.add_page(messages_panel, "Messages")
+    message_panel = MessagePanel.new(notebook)
+    notebook.add_page(message_panel, "Messages")
   end
   
   def on_quit
