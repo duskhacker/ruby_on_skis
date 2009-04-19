@@ -10,7 +10,7 @@ class AppFrame < AppFrameBase
     if Environment.darwin?
       @tbicon = MyTaskBarIcon.new(self)
     elsif Environment.mswin?
-      icon_file = File.join(Environment.app_root, 'image', "#{Environment.app_name.camelize}.ico")
+      icon_file = File.join(Environment.app_root, 'images', "#{Environment.app_name.underscore}.ico")
       icon = Wx::Icon.new(icon_file, Wx::BITMAP_TYPE_ICO)
       set_icon(icon)
     end

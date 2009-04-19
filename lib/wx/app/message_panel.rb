@@ -87,6 +87,8 @@ class MessagePanel < MessagePanelBase
 
     message_names.each_with_index do | name, i |
       record_grid.set_cell_value(i, NAME_COL, name.truncate(40))
+      record_grid.set_read_only(i, NAME_COL)
+      
       record_grid.set_cell_alignment(i, DELETE_COL, ALIGN_CENTRE, ALIGN_TOP)
     end
 

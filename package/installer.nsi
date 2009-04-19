@@ -97,10 +97,10 @@ Section "Start Menu Shortcuts" SecShortcuts
 
 	SetOutPath "$INSTDIR\bin"
   CreateDirectory "$SMPROGRAMS\${APP_NAME}"
-  CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" "$INSTDIR\bin\${APP_NAME_DOWNCASE}.exe" "pinit.rb" "$INSTDIR\image\${APP_NAME_DOWNCASE}.ico" 0
-  CreateShortCut "$INSTDIR\${APP_NAME}.lnk" "$SYSDIR\wscript.exe" "run.vbs" "$INSTDIR\image\${APP_NAME_DOWNCASE}.ico" 0
+  CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME}.lnk" "$INSTDIR\bin\${APP_NAME_DOWNCASE}.exe" "pinit.rb" "$INSTDIR\images\${APP_NAME_DOWNCASE}.ico" 0
+  CreateShortCut "$INSTDIR\${APP_NAME}.lnk" "$SYSDIR\wscript.exe" "run.vbs" "$INSTDIR\images\${APP_NAME_DOWNCASE}.ico" 0
 	SetOutPath $INSTDIR
-  CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME} Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\image\${APP_NAME_DOWNCASE}.ico" 0
+  CreateShortCut "$SMPROGRAMS\${APP_NAME}\${APP_NAME} Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\images\${APP_NAME_DOWNCASE}.ico" 0
   
 SectionEnd
 
@@ -111,7 +111,7 @@ Section "Quicklaunch Shortcut" SecQShortcut
 
 	SetOutPath "$INSTDIR\bin"
  ; CreateDirectory "$SMPROGRAMS\${APP_NAME}"
-  CreateShortCut "$QUICKLAUNCH\${APP_NAME}.lnk" "$INSTDIR\bin\${APP_NAME_DOWNCASE}.exe" "pinit.rb" "$INSTDIR\image\${APP_NAME_DOWNCASE}.ico" 0
+  CreateShortCut "$QUICKLAUNCH\${APP_NAME}.lnk" "$INSTDIR\bin\${APP_NAME_DOWNCASE}.exe" "pinit.rb" "$INSTDIR\images\${APP_NAME_DOWNCASE}.ico" 0
   
 SectionEnd
 
@@ -146,7 +146,7 @@ Section "Uninstall"
   RMDir /r "$INSTDIR\lib"
   RMDir /r "$INSTDIR\bin"
   RMDir /r "$INSTDIR\config"
-  RMDir /r "$INSTDIR\image"
+  RMDir /r "$INSTDIR\images"
   RMDir /r "$INSTDIR\migrate"
   ; RMDir /r "$INSTDIR\doc"
   ; Delete "$INSTDIR\*.dll"

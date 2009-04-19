@@ -134,7 +134,7 @@ namespace :package do
       when "i686-darwin9"
         Environment.app_name
       when "i386-mswin32"
-        Environment.app_name.downcase + '.exe'
+        Environment.app_name.underscore + '.exe'
       else
         raise "No app_ruby_exectable_name defined fer #{RUBY_PLATFORM}"
       end
