@@ -1,3 +1,6 @@
+# AppFrameBase will be defined by the XRC generated from
+# wxFormBuilder. Use the "Subclass" property in wxFB to define
+# it.
 class AppFrame < AppFrameBase
   include Helpers
   
@@ -23,6 +26,9 @@ class AppFrame < AppFrameBase
     self.status_text = "Welcome to #{Environment.app_name}!"
     status_bar.set_min_height 80
 
+    # The apps I've written so far are single window affairs with several notebook pages. wxFormBuilder doesn't seem to 
+    # support this directly, so creating an AppFrame, and then the notebook pages as separate panels, and tying them together
+    # here seems to work well. 
     message_panel = MessagePanel.new(notebook)
     notebook.add_page(message_panel, "Messages")
   end

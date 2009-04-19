@@ -1,3 +1,7 @@
+# Development init. There is some common code with the production-mode 'pinit.rb', 
+# but it's not worth the extra effort to refactor it out, you'll probably hardly 
+# ever touch these files.
+
 $LOAD_PATH << File.expand_path(File.dirname(__FILE__) + '/../../config')
 require 'environment'
 env = ENV[Environment.app_env_const] || 'production'

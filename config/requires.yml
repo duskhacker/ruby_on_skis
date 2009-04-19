@@ -1,3 +1,5 @@
+# Include the gems and the versions you want to use here. This file is only used in production,
+# when the program is packaged, this file is ignored in favor of what is available in the package.
 ---
 activerecord:    
   require: activerecord

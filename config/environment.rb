@@ -3,14 +3,16 @@ module Environment
  
     attr_accessor :environment # Accessor for testing
     
+    # Change this for each application, many settings are 
+    # based off of this setting. 
     def app_name
       "wxRubyTemplate"
     end
  
-    def setup(environment, load_gui_components = true, loading_from_bundle = false)
+    def setup(environment, load_gui_components = true, loading_from_package = false)
       @environment = environment
       $LOAD_PATH << ( app_root + '/config' )
-      require_libs(load_gui_components, loading_from_bundle)
+      require_libs(load_gui_components, loading_from_package)
       Dir.mkdir( data_path ) unless File.exists?(data_path)
       backup_database
       establish_connection
@@ -18,11 +20,12 @@ module Environment
       load_fixtures
     end
  
-    def require_libs(load_gui_components=true, loading_from_bundle=false)
+    def require_libs(load_gui_components=true, loading_from_package=false)
       require 'yaml'
       config = YAML.load_file(app_root + '/config/requires.yml')
 
-      unless loading_from_bundle
+      # Only do this when in development mode
+      unless loading_from_package
         require 'gemconfigure'
         gem_config = []
 

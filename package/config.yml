@@ -1,5 +1,11 @@
+# The directories you want to include for all platforms are placed in the  [:common][:include_dirs] section.
+# The files that you want to include for all platforms are placen in the [:common][:include_files] section. 
+# The same idea works for the platform-specific sections. The introspection process to find the files/libraries
+# necessary only works for executable code, so you will have to use these sections to include files that
+# the introspection process does not bring in. 
 --- 
 :common:
+# Be aware that you will need to reference these directories in the installer.nsi file as well. 
   :include_dirs:
   - images
   - config
@@ -13,6 +19,8 @@ i686-darwin9:
   - :source: /opt/local/lib/ruby/gems/1.8/gems/activesupport-2.2.2/lib/active_support/locale/en.yml
     :target: /lib/active_support/locale
 i386-mswin32: 
+# This key doesn't actually get pulled into the package, it is merely to point to the NSIS executable,
+# to configure that for the package:mswin Rake task.
   :makensis: C:/Program Files/NSIS/makensis.exe
   :include_files:
   - :source: C:/ruby-1.8.7-p72/lib/ruby/gems/1.8/gems/activerecord-2.2.2/lib/active_record/locale/en.yml

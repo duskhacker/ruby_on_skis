@@ -1,3 +1,7 @@
+# Production init. There is some common code with the development-mode 'init.rb', 
+# but it's not worth the extra effort to refactor it out, you'll probably hardly 
+# ever touch these files.
+
 bundle_path = File.expand_path(File.dirname(__FILE__) + '/../lib' )
 
 $LOAD_PATH.clear

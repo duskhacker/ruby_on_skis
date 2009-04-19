@@ -1,3 +1,6 @@
+# MesagePanel Base will be defined by the XRC generated from
+# wxFormBuilder. Use the "Subclass" property in wxFB to define
+# it.
 class MessagePanel < MessagePanelBase
   include Helpers
 
