@@ -6,11 +6,11 @@ describe Extensions::String::Truncate do
   end
   
   it "should truncate strings of more than 20 chars by default" do
-    'City_of_Paris_Combined_Stuff_And_Other'.truncate.should == "City_of_Paris_Com..."
+     'Lorem ipsum dolor sit amet, consectetur'.truncate.should == "Lorem ipsum dolor..."
   end
 
   it "should take an argument to determine the length of the truncation" do
-    'City_of_Paris_Combined_Stuff_And_Other'.truncate(30).should == "City_of_Paris_Combined_Stuf..."
+    'Lorem ipsum dolor sit amet, consectetur'.truncate(30).should == "Lorem ipsum dolor sit amet,..."
   end
   
   it "should return the original string if the truncation size is less than the size of the ellipses" do

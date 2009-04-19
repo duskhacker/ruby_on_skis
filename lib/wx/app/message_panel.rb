@@ -2,7 +2,7 @@
 # wxFormBuilder. Use the "Subclass" property in wxFB for the
 # panel to define it.
 class MessagePanel < MessagePanelBase
-  include Helpers
+  include AppHelper
   include Wx
   
   NAME_COL = 0

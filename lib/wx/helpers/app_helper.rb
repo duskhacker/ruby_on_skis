@@ -1,4 +1,4 @@
-module Helpers
+module AppHelper
   include Wx
 
   def error_alert(message)

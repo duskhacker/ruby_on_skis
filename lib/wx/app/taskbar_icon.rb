@@ -1,5 +1,5 @@
 class MyTaskBarIcon < Wx::TaskBarIcon
-  include Helpers
+  include AppHelper
   TBMENU_RESTORE = 6000
   TBMENU_CLOSE = 6001
   TBMENU_CHANGE = 6002

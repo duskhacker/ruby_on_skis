@@ -2,7 +2,7 @@
 # wxFormBuilder. Use the "Subclass" property in wxFB to define
 # it.
 class AppFrame < AppFrameBase
-  include Helpers
+  include AppHelper
   
   def initialize(title)
     super()

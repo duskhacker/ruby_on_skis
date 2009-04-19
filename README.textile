@@ -2,7 +2,7 @@ h1. wxRubyTemplate
 
 h2. Introduction
 
-The aim of the wxRubyTemplate is to provide a starting structure within which to program your wxRuby project. The template provides a directory structure, a set of Rakefiles to manage, and most importantly, to _package_ your Ruby application for distribution as a standalone program when completed. For now, the template only supports packaging for Mac OSX and Windows, although various flavors of Linux should be easily accommodated and are planned for the future.
+The aim of the wxRubyTemplate is to provide a starting structure within which to program your wxRuby project. The template provides a directory structure, a set of Rakefiles to manage, and most importantly, to _package_ your Ruby application for distribution as a standalone program when completed. It also includes an environment to get the application running and provide basic services to the program code. For now, the template only supports packaging for Mac OSX and Windows, although various flavors of Linux should be easily accommodated and are planned for the future.
 
 h2. Audience
 
@@ -14,6 +14,8 @@ h2. Features
 * Support for inclusion of specific versions of Ruby Gems. (Active Record is included in the template as an example)
 * Support for including arbitrary files needed to run specific Ruby Gems. 
 * A script/console command for interacting with your non-GUI code. 
+* Environment code that requires all of the code, and provides basic services to your code. 
+* Includes a basic example of creating/reading/deleting objects via ActiveRecord. 
 
 h2. Required tools 
 
@@ -41,7 +43,7 @@ The general workflow will be something like:
 # Run 'rake package:mswin[1.0]' to package the project for windows. The '1.0' is the version number, use what is appropriate for your project. You must run the packaging code on Windows to create a Windows package. 
 # Run 'rake package:dmg[1.0]' to package the code for OSX. Again, the '1.0' is just an example, use what is appropriate for your project. You must run the packaging code on OSX to create an OSX package. 
 
-Note: Due to the way the packaging code works, you need to require everything in the environment file when the program starts up. There should be no 'requires' sprinkled throughout the code, or you take the chance of having code not having found by the packaging code. 
+Note: Due to the way the packaging code works, you need to require everything in the environment file when the program starts up. There should be no 'requires' sprinkled throughout the code, or there is a chance that the packaging code will not find the required library and package it.
 
 
 h2. Further work 
@@ -58,7 +60,7 @@ Keep in mind that this template is very much a work in progress. I have used it 
 
 h2. A word about the included binaries
 
-I have included Mac OSX and Windows binaries for the libraries needed to run the example code. The included binaries are from Ruby 1.8.7-p72. Including the binaries is probably not the best long-term solution, however, I feel it is the pragmatic thing to do to quickly get this thing off the ground. If you need a different Ruby version, feel free to replace the binaries in your project. 
+I have included Mac OSX and Windows binaries for the libraries needed to run the example code. The included binaries are from Ruby 1.8.7-p72. Including the binaries is probably not the best long-term solution, however, I feel it is the pragmatic approach to quickly get this thing off the ground. If you need a different Ruby version, feel free to replace the binaries in your project. 
 
 h2. A note on Virtual Machines
 
