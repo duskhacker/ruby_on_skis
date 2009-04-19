@@ -4,9 +4,12 @@
 # this class and extend its behaviour there.  
 #
 # Source file: /Volumes/Projects/wxruby_template/lib/wx/app.xrc 
-# Generated at: Sat Apr 18 02:13:09 -0500 2009
+# Generated at: Sun Apr 19 10:53:44 -0500 2009
 
 class MessagePanelBase < Wx::Panel
+	
+	attr_reader :name_label, :name_text_ctrl, :add_button, :staticline,
+              :record_grid, :delete_button
 	
 	def initialize(parent = nil)
 		super()
@@ -27,6 +30,12 @@ class MessagePanelBase < Wx::Panel
 			end
 		end
 		
+		@name_label = finder.call("name_label")
+		@name_text_ctrl = finder.call("name_text_ctrl")
+		@add_button = finder.call("add_button")
+		@staticline = finder.call("staticline")
+		@record_grid = finder.call("record_grid")
+		@delete_button = finder.call("delete_button")
 		if self.class.method_defined? "on_init"
 			self.on_init()
 		end

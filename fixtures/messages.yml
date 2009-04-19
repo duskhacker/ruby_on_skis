@@ -1,5 +1,7 @@
 ---
 message_001:
+  name: First 
   content: Hello
 message_002:
+  name: Second
   content: World
