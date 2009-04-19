@@ -6,13 +6,14 @@ The aim of the wxRubyTemplate is to provide a starting structure within which to
 
 h2. Audience
 
-This template is initially aimed at fairly experienced developers. If this is your very first Ruby project, then this template probably is not for you. This is alpha-grade software. As the work progresses, it should become a viable choice for less experienced developers. 
+This template is initially aimed at Rubyists with some experience. If this is your very first Ruby project, then this template probably is not for you. This is alpha-grade software. As the work progresses, it should become a viable choice for less experienced developers. 
 
 h2. Features
 
-* Packaging for Windows and Mac OSX. 
+* Packaging for Windows and Mac OSX into a standalone program with an installer. 
 * Support for inclusion of specific versions of Ruby Gems. (Active Record is included in the template as an example)
 * Support for including arbitrary files needed to run specific Ruby Gems. 
+* A script/console command for interacting with your non-GUI code. 
 
 h2. Required tools 
 
@@ -26,10 +27,11 @@ In order to use the template effectively, you must use the following tools:
 
 h2. General Workflow
 
-The general workflow would be something like:
+The general workflow will be something like:
 
 # Clone the project. Use 'rake run' in the project directory to run the project and fix any problems. 
 # Remove the example code. 
+# Name your project by redefining the app_name method in config/environment.rb
 # Define Frames, Panels etc. with the appropriate Subclass names, filled with buttons, labels and other widgets with the appropriate names in wxFormBuilder. 
 # Press 'F8' (Generate XRC source) to create the XRC file in your project.
 # Write the appropriate handlers in subclasses of the generated Wx subclasses. 
@@ -39,32 +41,36 @@ The general workflow would be something like:
 # Run 'rake package:mswin[1.0]' to package the project for windows. The '1.0' is the version number, use what is appropriate for your project. You must run the packaging code on Windows to create a Windows package. 
 # Run 'rake package:dmg[1.0]' to package the code for OSX. Again, the '1.0' is just an example, use what is appropriate for your project. You must run the packaging code on OSX to create an OSX package. 
 
-Note: Due to the way the packaging code works, you need to require everything in the environment file when the program starts up. There should be no 'requires' sprinkled throughout the code, or you take the chance of not having found by the packaging code. 
+Note: Due to the way the packaging code works, you need to require everything in the environment file when the program starts up. There should be no 'requires' sprinkled throughout the code, or you take the chance of having code not having found by the packaging code. 
 
 
 h2. Further work 
 
 Keep in mind that this template is very much a work in progress. I have used it to complete a couple of small projects, and it has worked well for that aim, but right now it is very specific to the job it does, and is pretty hacky in places. Planned work for the future:
 
-* Instead of a template, my aim is to create a script that will generate the required directory structure and generate the code that glues it all together. 
+* Instead of a template, the goal is to create a script packaged in a gem that will generate the required directory structure and generate the code that glues it all together. 
 * Create a DEB installer for Linux.
 * Create an RPM installer for Linux. 
 * Generalize into a system for packaging all kinds of Ruby applications, not just those based on wxRuby. 
 * Create Wx mock class for unit testing Wx subclasses. (Yes, I know about Nobbie, but I just want something simple that I can mock out calls from/to Wx and have simple RSpec tests.)
+* Better RSpec configuration support. 
+
 
 h2. A word about the included binaries
 
 I have included Mac OSX and Windows binaries for the libraries needed to run the example code. The included binaries are from Ruby 1.8.7-p72. Including the binaries is probably not the best long-term solution, however, I feel it is the pragmatic thing to do to quickly get this thing off the ground. If you need a different Ruby version, feel free to replace the binaries in your project. 
 
-h2. An note on Virtual Machines
+h2. A note on Virtual Machines
 
-I develop on Mac OSX, then run the projects on Windows in a virtual machine, using Parallels to debug and ensure that it works in Windows. Using Parallels is recommended because it will mount your OSX drives in Windows. This way, you can still edit the source in OSX, and then simply use a command line in Windows to run the project. Once you are ready for packaging, you can simply export the project, and again just run the packager in Windows at the command line on the mounted OSX drive. 
+I develop on Mac OSX, then run the projects on Windows in a virtual machine, using Parallels to debug and ensure that it works in Windows. Using Parallels is recommended because it will mount your OSX drives in Windows. This way, you can still edit the source in OSX, and then simply use a command line in Windows to run the project. Once you are ready for packaging, you can simply export the project, and again just run the packager in Windows at the command line on the mounted OSX drive. This also points up the fact that the template might not work so well on Windows as the development environment, so there may be some problems with using that approach that I'm not aware of at this point. Feel free to file an issue with the Github issue tracker. 
 
 h2. Thanks
 
-I want to give a special thanks to Alex Fenton for his post on the wxRuby forum that paved the way for the creation of this template. 
+I want to give a special thanks to Alex Fenton for his post on the wxRuby forum and some of the code that it points to, which made it into the template, and otherwise paved the way for the creation of this template. 
 
 I would also like to thank the creators and contributors of wxWidgets, wxRuby and wxSugar for their outstanding work, otherwise this work would not have been possible. 
+
+I also want to thank the Rails team and contributors. You'll probably notice a certain rails-ish flavor to the template. I've also incorporated some stuff from ActiveRecord tasks into the mix, so thanks guys!
 
 h2. License 
 
@@ -74,5 +80,5 @@ h2. Finally, Be Gentle
 
 There are quite a few things that need work, and some things I plain don't like about the code, but it works for me on my development box. There may be things I've forgotten to include that exist on my box, which may not exist on yours. Please file reports via Github's issue tracker and I'll attempt to take care of them as I have time. The project is nowhere near polished, but I wanted to get it out there as soon as I can to give back to the community and garner feedback as I work to create a polished offering. 
 
-As with many open-source developer's I have a day job and this is a side project, please be patient. 
+As with many open-source developers, I have a day job and this is a side project, please be patient. 
  
