@@ -24,6 +24,7 @@ In order to use the template effectively, you must use the following tools:
 * "wxRuby":http://wxruby.rubyforge.org
 * "wxFormBuilder":http://wxformbuilder.org/
 * XRCise tool from "wxSugar":http://wxruby.rubyforge.org/wiki/wiki.pl?WxSugar. 
+* "RSpec":http://rspec.info/ for testing. 
 * "Platypus":http://www.sveinbjorn.org/platypus packager for creating the final package on Mac OS X. 
 * "NSIS":http://nsis.sourceforge.net/Main_Page packager for creating the final package on Windows. 
 
