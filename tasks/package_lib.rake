@@ -54,7 +54,6 @@ namespace :package do
     end
   end
 
-  # Refactor this, it is horrendous, and not my code
   def introspect_libraries
     ENV['ASSEMBLING'] = "true"
 

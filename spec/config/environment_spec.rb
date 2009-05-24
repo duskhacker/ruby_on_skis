@@ -5,7 +5,7 @@ describe Environment do
     if Environment.mswin?
       Environment.data_path.should == "#{File.expand_path(ENV['APPDATA'])}/#{Environment.app_name.camelize}"
     elsif Environment.darwin?
-      Environment.data_path.should == "#{ENV['HOME']}/.#{Environment.app_name.downcase}/"
+      Environment.data_path.should == "#{ENV['HOME']}/.#{Environment.app_name.underscore.downcase}/"
     else
       fail "No test defined for #{RUBY_PLATFORM}"
     end
@@ -26,12 +26,20 @@ describe Environment do
       Environment.backup_database
     end
     
+    it "should attempt to copy the database if it does not exist" do
+      File.should_receive(:exists?).with(Environment.db_file).and_return(false)
+      FileUtils.should_not_receive(:cp)
+      Environment.backup_database
+    end
+    
     it "should perform for production environments" do
+      File.stub!(:exists?).and_return(true)
       FileUtils.should_receive(:cp)
       Environment.backup_database
     end
     
     it "should rename all existing backups with an increment of 1 and delete the backup limit if it exists" do
+      File.stub!(:exists?).and_return(true)
       FileUtils.should_receive(:cp).with("#{Environment.db_file}", "#{Environment.db_file}.1")
       backup_files = (1..Environment.backup_limit).collect{ | i | "#{Environment.db_file}.#{i}" }
       Dir.should_receive(:glob).with("#{Environment.db_file}.*").and_return(backup_files)

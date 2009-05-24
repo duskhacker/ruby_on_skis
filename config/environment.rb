@@ -179,9 +179,7 @@ module Environment
         file_index = file_index_matcher.match(file)[1].to_i
         FileUtils.mv file, "#{Environment.db_file}.#{file_index+1}"
       end
-      if File.exists?(Environment.db_file)
-        FileUtils.cp Environment.db_file, "#{Environment.db_file}.1"
-      end
+      FileUtils.cp(Environment.db_file, "#{Environment.db_file}.1") if File.exists?(Environment.db_file)
     end
     
     def backup_limit
