@@ -76,25 +76,13 @@ module Environment
     end
  
     def migrate
-      if ActiveRecord::Base.connection.tables.include?("schema_info")
-        ActiveRecord::Base.connection.execute("drop table schema_info")
-        ActiveRecord::Base.connection.execute("create table schema_migrations(version varchar(255))")
-        ActiveRecord::Base.connection.execute("delete from schema_migrations")
-        ActiveRecord::Base.connection.execute("insert into schema_migrations(version) values('20081128200300')")
-        ActiveRecord::Base.connection.execute("insert into schema_migrations(version) values('20081227231600')")
-        ActiveRecord::Base.connection.execute("insert into schema_migrations(version) values('20081228131200')")
-      end
-            
       if production? 
         ActiveRecord::Migration.verbose=false
         ActiveRecord::Base.logger = Logger.new("#{data_path}/#{environment}.log")
       end
 
       ActiveRecord::Migrator.migrate(app_root + "/migrate/", ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
-      
-      if production? 
-        ActiveRecord::Base.logger = nil
-      end
+      ActiveRecord::Base.logger = nil if production? 
     end
  
     def load_fixtures
