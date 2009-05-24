@@ -1,8 +1,8 @@
-h1. wxRubyTemplate
+h1. Ruby on Skis
 
 h2. Introduction
 
-The aim of the wxRubyTemplate is to provide a starting structure within which to program your wxRuby project. The template provides a directory structure, a set of Rakefiles to manage, and most importantly, to _package_ your Ruby application for distribution as a standalone program when completed. It also includes an environment to get the application running and provide basic services to the program code. For now, the template only supports packaging for Mac OSX and Windows, although various flavors of Linux should be easily accommodated and are planned for the future.
+The aim of the Ruby on Skis is to provide a starting structure within which to program your wxRuby project. The template provides a directory structure, a set of Rakefiles to manage, and most importantly, to _package_ your Ruby application for distribution as a standalone program when completed. It also includes an environment to get the application running and provide basic services to the program code. For now, the template only supports packaging for Mac OSX and Windows, although various flavors of Linux should be easily accommodated and are planned for the future.
 
 h2. Audience
 
@@ -55,7 +55,8 @@ Keep in mind that this template is very much a work in progress. I have used it 
 * Create a DEB installer for Linux.
 * Create an RPM installer for Linux. 
 * Generalize into a system for packaging all kinds of Ruby applications, not just those based on wxRuby. 
-* Create Wx mock class for unit testing Wx subclasses. (Yes, I know about Nobbie, but I just want something simple that I can mock out calls from/to Wx and have simple RSpec tests.)
+* Create Wx mock class for unit testing Wx subclasses.
+* Include Nobbie examples
 * Better RSpec configuration support. 
 
 

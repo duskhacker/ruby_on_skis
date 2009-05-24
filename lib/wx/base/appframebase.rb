@@ -3,7 +3,7 @@
 # recommended that this file is edited directly; instead, inherit from
 # this class and extend its behaviour there.  
 #
-# Source file: /Volumes/Projects/wxruby_template/lib/wx/app.xrc 
+# Source file: /Volumes/Projects/ruby_on_skis/lib/wx/app.xrc 
 # Generated at: Sun Apr 19 10:53:44 -0500 2009
 
 class AppFrameBase < Wx::Frame
