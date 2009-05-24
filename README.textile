@@ -2,7 +2,7 @@ h1. Ruby on Skis
 
 h2. Introduction
 
-The aim of the Ruby on Skis is to provide a starting structure within which to program your wxRuby project. The template provides a directory structure, a set of Rakefiles to manage, and most importantly, to _package_ your Ruby application for distribution as a standalone program when completed. It also includes an environment to get the application running and provide basic services to the program code. For now, the template only supports packaging for Mac OSX and Windows, although various flavors of Linux should be easily accommodated and are planned for the future.
+The aim of Ruby on Skis is to provide a starting structure within which to program your wxRuby project. The template provides a directory structure, a set of Rakefiles to manage, and most importantly, to _package_ your Ruby application for distribution as a standalone program when completed. It also includes an environment to get the application running and provide basic services to the program code. For now, the template only supports packaging for Mac OSX and Windows, although various flavors of Linux should be easily accommodated and are planned for the future.
 
 h2. Audience
 

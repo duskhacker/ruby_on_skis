@@ -15,7 +15,9 @@ end
 desc "Run Project"
 task :run => Environment.base_class_path do
   ENV[Environment.app_env_const] = 'development'
-  executable = RUBY_PLATFORM =~ /darwin/ ? "/opt/local/bin/ruby" : "c:/ruby-1.8.7-p72/bin/ruby.exe"
+  executable = File.join( Config::CONFIG['bindir'],
+                          Config::CONFIG['RUBY_INSTALL_NAME'] +
+                          Config::CONFIG['EXEEXT'] )
   exec("#{executable} #{Environment.app_file}")
 end
 

@@ -6,7 +6,7 @@ module Environment
     # Change this for each application, many settings are 
     # based off of this setting. 
     def app_name
-      "wxRubyTemplate"
+      "RubyOnSkis"
     end
  
     def setup(environment, load_gui_components = true, loading_from_package = false)
