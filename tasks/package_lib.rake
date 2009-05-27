@@ -1,3 +1,4 @@
+require 'set'
 namespace :package do 
 
   desc "Zip the project, with version."
@@ -27,15 +28,11 @@ namespace :package do
     mkdir bin_dir
     mkdir lib_dir
 
-    introspect_libraries
-  
-    Dir.glob(File.expand_path(File.join(Environment.app_root, 'bin', RUBY_PLATFORM, '*'))).each do | lib |
-      cp lib, bin_dir
-    end
+    copy_source_files_and_libraries
     
-    cp File.expand_path(File.join(Environment.app_root, 'bin', 'common', 'pinit.rb')), bin_dir
+    cp File.expand_path(File.join(Environment.app_root, 'bin', 'pinit.rb')), bin_dir
 
-    mv "#{bin_dir}/#{ruby_executable_name}", "#{bin_dir}/#{app_ruby_executable_name}"
+    cp "#{ruby_executable_name}", "#{bin_dir}/#{app_ruby_executable_name}"
     
     config[:common][:include_dirs].each do | dir |
       cp_r "#{Environment.app_root}/#{dir}", build_dir
@@ -54,48 +51,38 @@ namespace :package do
     end
   end
 
-  def introspect_libraries
+  def copy_source_files_and_libraries
     ENV['ASSEMBLING'] = "true"
+    load File.join(Environment.app_root, 'bin', 'init.rb')
+    libraries = Set.new
+    $LOADED_FEATURES.each do | feature |
+      next if feature == "enumerator.so" # Not sure why we have to do this.
+      if path = $LOAD_PATH.detect{ | path | File.exists?(File.join(path, feature)) }
+        dest_path = File.join(lib_dir, File.dirname(feature)) 
+        FileUtils.mkdir_p(dest_path) unless File.exists?(dest_path)
+        cp File.join(path,feature), dest_path
 
-    load Environment.app_root + '/bin/common/init.rb'
-
-    lib_files = {}
-    $LOADED_FEATURES.each do | lib |
-      next if lib == "enumerator.so"
-      lib_file = nil
-      $LOAD_PATH.each do | path |
-        maybe_lib = File.join(path, lib)
-        if File.exists?(maybe_lib)
-          lib_file = maybe_lib
-          break
+        unless feature =~ /\.rb$/
+          `otool -L #{File.join(path,feature)}`.grep(/\s+\//).each do  | line | 
+            library = line.strip.split(/\s+/)[0] 
+            libraries << library if File.exists?(library) 
+          end
         end
-      end
-      if lib_file
-        lib_files[lib] = lib_file
       else
-        raise "Could not find lib_file #{lib}"
+        raise "Could not find #{feature} in filesystem."
       end
     end
-
-    lib_files.each_pair do | library, library_source_path |
-      dest_path = File.dirname(build_dir + '/lib/' + library)
-      FileUtils.mkdir_p(dest_path) unless File.exists?(dest_path)
-      cp library_source_path, dest_path
+    
+    libraries.each do | file | 
+      cp file, bin_dir
     end
   end
 
   def ruby_executable_name
-    if @ruby_executable_name.nil?
-      @ruby_executable_name = case RUBY_PLATFORM
-      when "i686-darwin9"
-        "ruby"
-      when "i386-mswin32"
-        "rubyw.exe"
-      else
-        raise "No app_ruby_exectable_name defined fer #{RUBY_PLATFORM}"
-      end
-    end
-    @ruby_executable_name
+    @ruby_executable_name ||= File.join( Config::CONFIG['bindir'],
+      Config::CONFIG['RUBY_INSTALL_NAME'] +
+      Config::CONFIG['EXEEXT'] 
+    )
   end
   
   def include_files
