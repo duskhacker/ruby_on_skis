@@ -5,7 +5,10 @@
 bundle_path = File.expand_path(File.dirname(__FILE__) + '/../lib' )
 
 $LOAD_PATH.clear
-$LOAD_PATH << "#{bundle_path}"
+$LOAD_PATH << bundle_path
+$LOAD_PATH << File.join(bundle_path, 'ruby', 'site_ruby', RUBY_VERSION)
+$LOAD_PATH << File.join(bundle_path, 'ruby', RUBY_VERSION)
+$LOAD_PATH << File.join(bundle_path, 'ruby', RUBY_VERSION, RUBY_PLATFORM)
 Dir.glob("#{bundle_path}/*") do | path |
   if File.directory?(path)
     $LOAD_PATH << path

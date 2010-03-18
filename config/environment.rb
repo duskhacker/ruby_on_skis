@@ -71,7 +71,7 @@ module Environment
       end
       ActiveRecord::Base.establish_connection(
         :adapter => "sqlite3",
-        :dbfile => db_file
+        :database => db_file
       )
     end
  
@@ -99,6 +99,15 @@ module Environment
     def load_tasks
       Dir["#{Environment.app_root}/tasks/**/*.rake"].sort.each { |ext| load ext }
     end
+
+    def load_packager
+      if mswin?
+        load "#{Environment.app_root}/package/mswin.rake"
+      elsif darwin?
+        load "#{Environment.app_root}/package/osx.rake"
+      end
+      load "#{Environment.app_root}/package/package_lib.rake"
+    end
  
     def db_file(env=environment)
       File.join(data_path, "#{app_name.underscore}_#{env}.db")
@@ -113,7 +122,7 @@ module Environment
     end
     
     def app_file
-      "#{app_root}/bin/common/init.rb"
+      "#{app_root}/bin/init.rb"
     end
     
     def spec_path
@@ -168,7 +177,7 @@ module Environment
     end
     
     def darwin?
-      RUBY_PLATFORM == 'i686-darwin9'
+      RUBY_PLATFORM =~ /darwin/
     end
     
     def backup_database

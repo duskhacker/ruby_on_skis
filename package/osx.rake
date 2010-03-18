@@ -1,6 +1,3 @@
-require 'mkmf'
-require 'fileutils' # ? 
-
 namespace :package do 
   
   desc "Create DMG for App"
@@ -10,7 +7,7 @@ namespace :package do
     Rake::Task['package:osx_app'].invoke(args.version)
     rm_rf dmg_source_name
     mkdir_p dmg_source_name 
-    cp_r app_bundle_name, dmg_source_name
+    cp_r app_bundle_name, dmg_source_name, :preserve => true
     rm_rf dmg_image_name
     sh "hdiutil create -fs HFS+ -srcfolder #{dmg_source_name} -format UDBZ " +
        "-volname '#{Environment.app_name} #{build_version}'  #{dmg_image_name}"
@@ -69,5 +66,26 @@ namespace :package do
       "-I\"$1/Contents/Resources/config\" " + 
       "\"$1/Contents/Resources/bin/pinit.rb\" \"$1\""
     end
+  end
+
+  def find_dynamic_libraries(feature, current_libraries)
+    return if feature =~ /\.rb$/
+    puts "finding dynamic libraries for #{File.basename(feature)}"
+    puts `otool -L #{feature}`.inspect
+    `otool -L #{feature}`.partition("\n").grep(/\s+\//).inject(current_libraries) do  | libraries, line |
+      library = line.strip.split(/\s+/)[0]
+      libraries << library if File.exists?(library)
+    end
+  end
+
+  def ruby_executable_name
+    @ruby_executable_name ||= File.join( Config::CONFIG['bindir'],
+      Config::CONFIG['RUBY_INSTALL_NAME'] +
+      Config::CONFIG['EXEEXT']
+    )
+  end
+
+  def app_ruby_executable_name
+    @app_ruby_executable_name ||= Environment.app_name
   end
 end

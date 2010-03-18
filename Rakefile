@@ -6,6 +6,7 @@ config_path = File.expand_path(File.dirname(__FILE__) + '/config')
 $LOAD_PATH << config_path unless $LOAD_PATH.include?(config_path)
 require 'environment'
 Environment.load_tasks
+Environment.load_packager
 
 Spec::Rake::SpecTask.new(:spec) do |t|
   t.spec_files = FileList["#{Environment.spec_path}/**/*_spec.rb"]
