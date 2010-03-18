@@ -1,16 +1,8 @@
 require 'mkmf'
 require 'fileutils' # ?
 require 'set'
+require 'yaml'
 namespace :package do 
-
-  desc "Zip the project, with version."
-  task :zip, :version do | t, args |
-    if args.version.nil? 
-      puts "usage: rake zip[version]"
-      exit 1
-    end
-    sh "zip -lry #{File.expand_path(Environment.app_root + '/..')}/#{Environment.app_name.downcase}-#{args.version}.zip #{Environment.app_root}"
-  end
 
   desc "Clean up build products."
   task :clean do 
@@ -30,8 +22,6 @@ namespace :package do
     mkdir bin_dir
     mkdir lib_dir
 
-    copy_source_files_and_libraries
-
     cp File.expand_path(File.join(Environment.app_root, 'bin', 'pinit.rb')), bin_dir, :preserve => true
 
     cp "#{ruby_executable_name}", "#{bin_dir}/#{app_ruby_executable_name}", :preserve => true
@@ -41,33 +31,24 @@ namespace :package do
       cp_r "#{Environment.app_root}/#{dir}", build_dir, :preserve => true
     end
 
-    (platform_specific_include_files + common_include_files).each do | file |
-      if file.is_a?(Hash)
-        target = "#{build_dir}/#{file[:target]}"
-        mkdir_p(target)  unless File.exists?(target)
-        cp file[:source], target, :preserve => true
-      else
-        target_dir = "#{build_dir}/#{File.dirname(file)}"
-        mkdir_p(target_dir)  unless File.exists?(target_dir)
-        cp Environment.app_root + "/#{file}", target_dir, :preserve => true
-      end
+    config[:common][:include_files].each do | file |
+      cp "#{Environment.app_root}/#{file}", build_dir, :preserve => true
     end
-  end
 
-  def copy_source_files_and_libraries
-    ENV['ASSEMBLING'] = "true"
-    load File.join(Environment.app_root, 'bin', 'init.rb')
-    libraries = Set.new
-    re = /^.*\/(lib|config)\/(.*)$/
-    $LOADED_FEATURES.each do | feature |
-      next if feature == "enumerator.so" # Not sure why we have to do this.
-      dest_path = File.join(lib_dir, re.match(feature)[2])
-      if File.exists?(feature)
-        mkdir_p File.dirname(dest_path) unless File.exists?(File.dirname(dest_path))
-        cp feature, dest_path, :preserve => true
-        find_dynamic_libraries(feature, libraries)
-      else
-        raise "Could not find #{feature} in filesystem."
+    cp_r RbConfig::CONFIG['libdir'], build_dir
+    copy_dynamic_libraries
+
+  end
+  
+  def copy_dynamic_libraries
+    require 'find'
+    libraries = Set.new 
+
+    Find.find(build_dir) do | path |
+      next unless path =~ /\.bundle$/ 
+      `otool -L #{path}`.split("\n").each do | line |
+        library = line.strip.split(/\s+/).first
+        libraries << library if File.exists?(library)
       end
     end
 
@@ -75,8 +56,8 @@ namespace :package do
   end
 
   def platform_specific_include_files
-    if config.has_key?(RUBY_PLATFORM) && config[RUBY_PLATFORM].has_key?(:include_files) && !config[RUBY_PLATFORM][:include_files].nil? 
-      config[RUBY_PLATFORM][:include_files]
+    if config.has_key?(Environment.ruby_platform) && config[Environment.ruby_platform].has_key?(:include_files) && !config[Environment.ruby_platform][:include_files].nil? 
+      config[Environment.ruby_platform][:include_files]
     else 
       []
     end
@@ -91,7 +72,7 @@ namespace :package do
   end
 
   def include_libs
-    config[RUBY_PLATFORM][:include_libs]
+    config[Environment.ruby_platform][:include_libs]
   end
 
   def build_dir

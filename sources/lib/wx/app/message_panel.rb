@@ -19,7 +19,7 @@ class MessagePanel < MessagePanelBase
     # include an unsupported widget. Just define a small wxStaticLine in wxFB, then 
     # use that as the 'handle' to add the widget to the staticline's container.
     
-    @editor = StyledTextCtrl.new(self, :style => SUNKEN_BORDER, :border => 10)
+    @editor = StyledTextCtrl.new(self, :style => SUNKEN_BORDER)
     editor.set_wrap_mode 1 
     editor.set_margin_width 1, 30
     editor.set_margin_type 1,1 # Line numbers

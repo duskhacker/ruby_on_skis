@@ -12,7 +12,7 @@ class MyTaskBarIcon < Wx::TaskBarIcon
 
     # starting image
     icon = make_icon("#{Environment.app_name.underscore}.ico")
-    set_icon(icon, "#{Environment.app_name}")
+    set_icon(icon, "#{Environment.app_name}") unless icon.nil?
     @image_index = 1
 
     # events

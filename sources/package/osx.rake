@@ -25,6 +25,10 @@ namespace :package do
     includes = config[:common][:include_dirs].inject("-f build/bin ") do | inc, dir |
       inc << "-f build/#{dir} "
     end
+    
+    config[:common][:include_files].each do | file |
+      includes << "-f build/#{file} "
+    end
         
     sh "platypus -a '#{Environment.app_name}' -V #{build_version} " +
        "-f build/lib #{includes}  " + 
@@ -64,10 +68,11 @@ namespace :package do
       "export DYLD_LIBRARY_PATH=\"$1/Contents/Resources/bin\" && exec" + 
       " \"$1/Contents/Resources/bin/#{app_ruby_executable_name}\" " +
       "-I\"$1/Contents/Resources/config\" " + 
+      "-I\"$1/Contents/Resources/lib/ruby/#{RUBY_VERSION}/#{RUBY_PLATFORM}\" " + 
       "\"$1/Contents/Resources/bin/pinit.rb\" \"$1\""
     end
   end
-
+  
   def find_dynamic_libraries(feature, current_libraries)
     return if feature =~ /\.rb$/
     puts "finding dynamic libraries for #{File.basename(feature)}"

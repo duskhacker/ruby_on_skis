@@ -21,29 +21,8 @@ module Environment
     end
  
     def require_libs(load_gui_components=true, loading_from_package=false)
-      require 'yaml'
-      config = YAML.load_file(app_root + '/config/requires.yml')
-
-      # Only do this when in development mode
-      unless loading_from_package
-        require 'gemconfigure'
-        gem_config = []
-
-        config.each_pair do | name, values |
-          next if !load_gui_components && name =~/wx/
-          gem_config << [name, values["version"]]
-        end
-      
-        Gem.configure(gem_config)
-      end
-      
-      config.each_pair do | name, values |
-        next if !load_gui_components && name =~/wx/
-        require values["require"]
-      end
-      
-      # app-specific 
-      
+      require File.join(app_root, 'vendor', 'gems', 'environment') 
+      Bundler.require_env
       require 'find'
       Find.find(File.expand_path(File.dirname(__FILE__) + '/../lib')) do | path |
         Find.prune if !File.directory?(path) || File.basename(path).index('.') == 0 
@@ -110,7 +89,13 @@ module Environment
     end
  
     def db_file(env=environment)
-      File.join(data_path, "#{app_name.underscore}_#{env}.db")
+      database_yml = File.join(data_path, 'database.yml')
+      db_path = if File.exists?(database_yml)
+        YAML.load_file(database_yml)['database_path']
+      else
+        data_path
+      end
+      File.join(db_path, "#{app_name.underscore}_#{env}.db")
     end
     
     def xrc_file
@@ -180,8 +165,17 @@ module Environment
       RUBY_PLATFORM =~ /darwin/
     end
     
+    def ruby_platform 
+      case RUBY_PLATFORM
+      when /darwin/; "darwin"
+      when /mswin/; "mswin"
+      when /linux/; "linux"
+      end
+    end
+    
     def backup_database
       return unless Environment.production?
+      require 'fileutils'
       file_index_matcher = /#{File.basename(Environment.db_file)}\.(\d)$/
       Dir.glob("#{Environment.db_file}.*").sort.reverse.each do | file |
         next if file == "#{Environment.db_file}.#{backup_limit}"

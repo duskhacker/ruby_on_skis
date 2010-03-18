@@ -62,7 +62,7 @@ namespace :package do
   end
   
   def ruby_bin_dir
-    config[RUBY_PLATFORM][:ruby_bin_dir]
+    config[Environment.ruby_platform][:ruby_bin_dir]
   end
 
   def depends

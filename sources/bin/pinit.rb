@@ -2,13 +2,19 @@
 # but it's not worth the extra effort to refactor it out, you'll probably hardly 
 # ever touch these files.
 
+
+# TODO: Examine and refactor these load path statements 
 bundle_path = File.expand_path(File.dirname(__FILE__) + '/../lib' )
 
 $LOAD_PATH.clear
 $LOAD_PATH << bundle_path
+$LOAD_PATH << File.expand_path(File.dirname(__FILE__) + '/../config' )
+
 $LOAD_PATH << File.join(bundle_path, 'ruby', 'site_ruby', RUBY_VERSION)
 $LOAD_PATH << File.join(bundle_path, 'ruby', RUBY_VERSION)
 $LOAD_PATH << File.join(bundle_path, 'ruby', RUBY_VERSION, RUBY_PLATFORM)
+
+# TODO: Examine and refactor these load path statements 
 Dir.glob("#{bundle_path}/*") do | path |
   if File.directory?(path)
     $LOAD_PATH << path

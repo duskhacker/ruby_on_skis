@@ -29,6 +29,7 @@ module AppHelper
     # Different platforms have different requirements for the
     #  taskbar icon size
     filename = "#{Environment.app_root}/images/#{imgname}" 
+    return unless File.exists?(filename)
     img = Wx::Image.new(filename)
     if Wx::PLATFORM == "WXMSW"
       img = img.scale(16, 16)

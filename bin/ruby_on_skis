@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+require "rubygems"
+file_location = if FileTest.symlink?($0) 
+  File.expand_path(File.readlink($0), File.dirname(__FILE__))
+else
+  File.expand_path(__FILE__)
+end
+lib_dir = File.join(File.dirname(file_location), '..', 'lib')
+$:.unshift(lib_dir)
+require 'ruby_on_skis/generator'
+
+RubyOnSkis::AppGenerator.new.run

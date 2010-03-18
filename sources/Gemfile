@@ -1,0 +1,5 @@
+disable_system_gems
+gem 'activesupport', '2.3.4'
+gem 'activerecord', '2.3.4'
+gem 'sqlite3-ruby', '1.2.3', :require_as => 'sqlite3'
+gem 'wxruby-ruby19', "2.0.1", :require_as => 'wx'

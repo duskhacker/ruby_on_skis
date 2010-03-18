@@ -1,20 +1,19 @@
 h1. Ruby on Skis
 
-I've just created the gem, which is totally non-working. Please do not install. I've just pushed it to get a feel for what to do. 
+Now with a generator! Download away! 
+
+Ruby GUI development with packaging.
 
 h2. Introduction
 
-The aim of Ruby on Skis is to provide a starting structure within which to program your wxRuby project. The template provides a directory structure, a set of Rakefiles to manage, and most importantly, to _package_ your Ruby application for distribution as a standalone program when completed. It also includes an environment to get the application running and provide basic services to the program code. For now, the template only supports packaging for Mac OSX and Windows, although various flavors of Linux should be easily accommodated and are planned for the future.
+Ruby on Skis provides a template for your wxRuby project. The template provides a directory structure, a set of Rakefiles to manage, and most importantly, to _package_ your Ruby application for distribution as a standalone program. It also includes an environment to get the application running and provide basic services to the program code. For now, the template only supports packaging for Mac OSX -and Windows-, although various flavors of Linux should be easily accommodated and are planned for the future.
 
-h2. Audience
-
-This template is initially aimed at Rubyists with some experience. If this is your very first Ruby project, then this template probably is not for you. This is alpha-grade software. As the work progresses, it should become a viable choice for less experienced developers. 
+Note: Windows support has been removed in favor of getting a working generator and distributable gem in place. 
 
 h2. Features
 
-* Packaging for Windows and Mac OSX into a standalone program with an installer. 
-* Support for inclusion of specific versions of Ruby Gems. (Active Record is included in the template as an example)
-* Support for including arbitrary files needed to run specific Ruby Gems. 
+* Packaging for -Windows- and Mac OSX into a standalone program with an installer. 
+* Support for inclusion of specific versions of RubyGems via gem bundler. 
 * A script/console command for interacting with your non-GUI code. 
 * Environment code that requires all of the code, and provides basic services to your code. 
 * Includes a basic example of creating/reading/deleting objects via ActiveRecord. 
@@ -28,22 +27,40 @@ In order to use the template effectively, you must use the following tools:
 * XRCise tool from "wxSugar":http://wxruby.rubyforge.org/wiki/wiki.pl?WxSugar. 
 * "RSpec":http://rspec.info/ for testing. 
 * "Platypus":http://www.sveinbjorn.org/platypus packager for creating the final package on Mac OS X. 
-* "NSIS":http://nsis.sourceforge.net/Main_Page packager for creating the final package on Windows. 
+* -"NSIS":http://nsis.sourceforge.net/Main_Page packager for creating the final package on Windows.-
 
-h2. General Workflow
+h2. Getting started
 
-The general workflow will be something like:
+h3. The general workflow will be something like:
 
-# Clone the project. Use 'rake run' in the project directory to run the project and fix any problems. 
+# $ gem install ruby_on_skis (ensure you are getting 1.0.0 or later)
+# $ ruby_on_skis /path/to/new_project
+# $ cd /path/to/new_project
+# $ gem bundle
+# $ rake run
+
+You now should have a working example application. 
+
+h3. In your Ruby Code
+
 # Remove the example code. 
 # Name your project by redefining the app_name method in config/environment.rb
+
+h3. In wxFormBuilder
+
 # Define Frames, Panels etc. with the appropriate Subclass names, filled with buttons, labels and other widgets with the appropriate names in wxFormBuilder. 
 # Press 'F8' (Generate XRC source) to create the XRC file in your project.
+
+h3. In your Ruby Code
+
 # Write the appropriate handlers in subclasses of the generated Wx subclasses. 
 # Exceute 'rake run' which will generate the GUI glue code via XRCise and run the project. 
 # Repeat as necessary. 
-# Once you are ready to package the project, examine and modify installer.nsi as necessary for the windows packager. 
-# Run 'rake package:mswin[1.0]' to package the project for windows. The '1.0' is the version number, use what is appropriate for your project. You must run the packaging code on Windows to create a Windows package. 
+
+h3. Packaging 
+
+# -Once you are ready to package the project, examine and modify installer.nsi as necessary for the windows packager.-
+# -Run 'rake package:mswin[1.0]' to package the project for windows. The '1.0' is the version number, use what is appropriate for your project. You must run the packaging code on Windows to create a Windows package.- 
 # Run 'rake package:dmg[1.0]' to package the code for OSX. Again, the '1.0' is just an example, use what is appropriate for your project. You must run the packaging code on OSX to create an OSX package. 
 
 Note: Due to the way the packaging code works, you need to require everything in the environment file when the program starts up. There should be no 'requires' sprinkled throughout the code, or there is a chance that the packaging code will not find the required library and package it.
@@ -51,38 +68,31 @@ Note: Due to the way the packaging code works, you need to require everything in
 
 h2. Further work 
 
-Keep in mind that this template is very much a work in progress. I have used it to complete a couple of small projects, and it has worked well for that aim, but right now it is very specific to the job it does, and is pretty hacky in places. Planned work for the future:
+For now, developing and packaging for _only_ Mac OSX is supported. Further work includes:
 
-* Instead of a template, the goal is to create a script packaged in a gem that will generate the required directory structure and generate the code that glues it all together. 
-* Create a DEB installer for Linux.
-* Create an RPM installer for Linux. 
-* Generalize into a system for packaging all kinds of Ruby applications, not just those based on wxRuby. 
+* Create a Windows installer generator. 
+* Create a DEB installer generator for Linux.
+* Create an RPM installer generator for Linux. 
 * Create Wx mock class for unit testing Wx subclasses.
 * Include Nobbie examples
-* Better RSpec configuration support. 
+* Better RSpec configuration support, move RSpec tests out of the template. 
 
-
-h2. A word about the included binaries
-
-I have included Mac OSX and Windows binaries for the libraries needed to run the example code. The included binaries are from Ruby 1.8.7-p72. Including the binaries is probably not the best long-term solution, however, I feel it is the pragmatic approach to quickly get this thing off the ground. If you need a different Ruby version, feel free to replace the binaries in your project. 
 
 h2. A note on Virtual Machines
 
-I develop on Mac OSX, then run the projects on Windows in a virtual machine, using Parallels to debug and ensure that it works in Windows. Using Parallels is recommended because it will mount your OSX drives in Windows. This way, you can still edit the source in OSX, and then simply use a command line in Windows to run the project. Once you are ready for packaging, you can simply export the project, and again just run the packager in Windows at the command line on the mounted OSX drive. This also points up the fact that the template might not work so well on Windows as the development environment, so there may be some problems with using that approach that I'm not aware of at this point. Feel free to file an issue with the Github issue tracker. 
+-I develop on Mac OSX, then run the projects on Windows in a virtual machine, using Parallels to debug and ensure that it works in Windows. Using Parallels is recommended because it will mount your OSX drives in Windows. This way, you can still edit the source in OSX, and then simply use a command line in Windows to run the project. Once you are ready for packaging, you can simply export the project, and again just run the packager in Windows at the command line on the mounted OSX drive. This also points up the fact that the template might not work so well on Windows as the development environment, so there may be some problems with using that approach that I'm not aware of at this point. Feel free to file an issue with the Github issue tracker.-
 
 h2. Thanks
 
-I want to give a special thanks to Alex Fenton for his post on the wxRuby forum and some of the code that it points to, which made it into the template, and otherwise paved the way for the creation of this template. 
+Thanks to the creators of and contributors to wxWidgets, wxRuby and wxSugar for their outstanding work, otherwise this work would not have been possible. 
 
-I would also like to thank the creators and contributors of wxWidgets, wxRuby and wxSugar for their outstanding work, otherwise this work would not have been possible. 
-
-I also want to thank the Rails team and contributors. You'll probably notice a certain rails-ish flavor to the template. I've also incorporated some stuff from ActiveRecord tasks into the mix, so thanks guys!
+I also want to thank the Rails team and contributors. You'll probably notice a certain rails-ish flavor to project. I've also incorporated some stuff from ActiveRecord tasks into the mix, so thanks guys!
 
 h2. License 
 
 While I really don't care about licenses much, it is probably necessary to state here that this template is hereby released under Ruby's license, which seems pretty liberal. Some kudos in your app to me would be nice if you base it on this work. 
 
-h2. Finally, Be Gentle
+h2. Open Source Project
 
 There are quite a few things that need work, and some things I plain don't like about the code, but it works for me on my development box. There may be things I've forgotten to include that exist on my box, which may not exist on yours. Please file reports via Github's issue tracker and I'll attempt to take care of them as I have time. The project is nowhere near polished, but I wanted to get it out there as soon as I can to give back to the community and garner feedback as I work to create a polished offering. 
 
