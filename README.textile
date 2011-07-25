@@ -10,6 +10,16 @@ Ruby on Skis provides a template for your wxRuby project. The template provides 
 
 Note: Windows support has been removed in favor of getting a working generator and distributable gem in place. 
 
+h2. ABANDONED!
+
+The base GUI toolkit on which this work is based, wxRuby, is no longer maintained on OS-X. The wxRuby project stopped working when Snow Leopard was released, and no further work on wxRuby has been forthcoming. 
+
+My dreams for a cross-platform environment for writing GUI based desktop programs in Ruby are dashed at this point. If you wish to pursue cross-platform desktop application development, you might look at the following:
+
+* "wxPython":http://www.wxpython.org/
+* "RealStudio":http://www.realsoftware.com/realstudio/
+* and of course, the old standby: Java
+
 h2. Features
 
 * Packaging for -Windows- and Mac OSX into a standalone program with an installer. 
